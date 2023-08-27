@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    vector<long long> stones(n);
+    for (int i = 0; i < n; i++) {
+        cin >> stones[i];
+    }
+    
+    // Create a prefix sum array of the stones' values
+    vector<long long> prefixSum(n);
+    prefixSum[0] = stones[0];
+    for (int i = 1; i < n; i++) {
+        prefixSum[i] = prefixSum[i - 1] + stones[i];
+    }
+    
+    sort(stones.begin(), stones.end());
+    vector<long long> prefixSumSorted(n);
+    prefixSumSorted[0] = stones[0];
+    for (int i = 1; i < n; i++) {
+        prefixSumSorted[i] = prefixSumSorted[i - 1] + stones[i];
+    }
+    
+    int m;
+    cin >> m;
+    
+    for (int i = 0; i < m; i++) {
+        int type, l, r;
+        cin >> type >> l >> r;
+        
+        if (type == 1) {
+            // Query type 1: Calculate the sum of values in the range [l, r]
+            long long sum = prefixSum[r - 1];
+            if (l > 1) {
+                sum -= prefixSum[l - 2];
+            }
+            cout << sum << endl;
+        } else {
+            // Query type 2: Calculate the sum of sorted values in the range [l, r]
+            long long sum = prefixSumSorted[r - 1];
+            if (l > 1) {
+                sum -= prefixSumSorted[l - 2];
+            }
+            cout << sum << endl;
+        }
+    }
+    
+    return 0;
+}
