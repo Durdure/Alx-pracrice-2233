@@ -1,0 +1,26 @@
+def find_repeated_element(arr):
+    element_count = {}
+    for num in arr:
+        if num in element_count:
+            element_count[num] += 1
+            if element_count[num] == 3:
+                return num
+        else:
+            element_count[num] = 1
+    return -1
+
+# Read the number of test cases
+t = int(input())
+
+for _ in range(t):
+    # Read the length of the array
+    n = int(input())
+
+    # Read the elements of the array
+    arr = list(map(int, input().split()))
+
+    # Find a value that appears at least three times
+    result = find_repeated_element(arr)
+
+    # Print the result
+    print(result)
